@@ -6,7 +6,7 @@ import { Row, Col, ListGroup } from 'react-bootstrap';
 import { Image, Form, Button, Card } from 'react-bootstrap';
 import Message from '../components/Message';
 //actions
-import { addToCart } from '../actions/cartActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 
 const CartScreen = () => {
   const { id: productID } = useParams();
@@ -24,7 +24,7 @@ const CartScreen = () => {
   }, [dispatch, productID, qty]);
 
   const removeFromCartHandler = (id) => {
-    console.log('remove ' + id);
+    dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {
