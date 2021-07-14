@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 import Product from '../components/Product';
 
 const HomeScreen = () => {
@@ -17,9 +19,9 @@ const HomeScreen = () => {
     <>
       <h1>Latest Products</h1>
       {loading ? (
-        <p> Loading </p>
+        <Loader />
       ) : error ? (
-        <h3> {error} </h3>
+        <Message variant='danger'>{error}</Message>
       ) : (
         <Row>
           {products.map((product) => (
