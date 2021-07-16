@@ -104,7 +104,7 @@ const CartScreen = () => {
             </ListGroup.Item>
             <ListGroup.Item>
               <Button
-                blocked
+                block
                 disabled={cartItems.length === 0}
                 onClick={checkoutHandler}
               >
