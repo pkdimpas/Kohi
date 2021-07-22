@@ -14,7 +14,7 @@ const OrderScreen = () => {
 
   //redux state
   const orderDetails = useSelector((state) => state.orderDetails);
-  const { order, loading, error } = orderDetails;
+  const { loading: loadingOrder, order, error } = orderDetails;
 
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
@@ -34,6 +34,7 @@ const OrderScreen = () => {
       script.onload = () => {
         setSdkReady(true);
       };
+
       document.body.appendChild(script);
     };
 
@@ -54,7 +55,7 @@ const OrderScreen = () => {
     dispatch(payOrder(orderId, paymentResult));
   };
 
-  return loading ? (
+  return loadingOrder ? (
     <Loader />
   ) : error ? (
     <Message variant='danger'>{error}</Message>
