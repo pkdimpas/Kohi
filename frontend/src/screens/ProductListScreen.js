@@ -8,7 +8,7 @@ import Loader from '../components/Loader';
 import {
   deleteProduct,
   listProducts,
-  productReset,
+  resetCreateProduct,
 } from '../actions/productActions';
 import { createProduct } from '../actions/productActions';
 
@@ -44,7 +44,7 @@ const ProductListScreen = () => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(productReset());
+    dispatch(resetCreateProduct());
 
     if (userInfo && !userInfo.isAdmin) {
       history.push('/login');
