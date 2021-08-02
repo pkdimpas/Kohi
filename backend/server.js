@@ -1,4 +1,5 @@
 import path from 'path';
+import morgan from 'morgan';
 import express from 'express';
 import dontenv from 'dotenv';
 import colors from 'colors';
@@ -15,11 +16,15 @@ connectDB();
 
 const app = express();
 
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 //Allow us to accept json data in the body
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('API is running');
+  res.send('API is running...');
 });
 
 app.use('/api/products', productRoutes);
