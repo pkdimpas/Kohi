@@ -27,6 +27,7 @@ import {
   USER_UPDATE_SUCCESS,
   USER_UPDATE_RESET,
   USER_UPDATE_FAIL,
+  USER_UPDATE_PROFILE_RESET,
 } from '../constants/userConstants';
 
 export const login = (email, password) => async (dispatch) => {
@@ -160,6 +161,12 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_SUCCESS,
       payload: data,
     });
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    });
+
+    localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,
@@ -231,6 +238,9 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 
 export const updateUserReset = () => async (dispatch) => {
   dispatch({ type: USER_UPDATE_RESET });
+};
+export const updateProfileReset = () => async (dispatch) => {
+  dispatch({ type: USER_UPDATE_PROFILE_RESET });
 };
 
 export const updateUser = (user) => async (dispatch, getState) => {
