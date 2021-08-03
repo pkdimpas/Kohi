@@ -8,9 +8,6 @@ main {
 h3 {
   padding: 1rem 0;
 }
-.rating span {
-  margin: 0.1rem;
-}
 
 h2 {
   font-size: 1.4rem;
@@ -19,7 +16,11 @@ h2 {
 
 h1 {
   font-size: 1.8rem;
-  padding: 0.1rem;
+  padding: 1rem 0;
+}
+
+.rating span {
+  margin: 0.1rem;
 }
 
 /* carousel */
@@ -49,6 +50,10 @@ h1 {
 }
 .carousel a {
   margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 900px) {

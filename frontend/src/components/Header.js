@@ -45,7 +45,6 @@ const Header = () => {
                   <i className='fas fa-shopping-cart'></i> Cart
                 </Nav.Link>
               </LinkContainer>
-              {profile}
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title='Admin' id='adminmenu'>
                   <LinkContainer to='/admin/userList'>
@@ -59,6 +58,7 @@ const Header = () => {
                   </LinkContainer>
                 </NavDropdown>
               )}
+              {profile}
             </Nav>
           </Navbar.Collapse>
         </Container>
