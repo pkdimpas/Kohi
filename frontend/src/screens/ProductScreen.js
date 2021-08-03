@@ -20,6 +20,7 @@ import {
   createProductReview,
   resetCreateReviewProduct,
 } from '../actions/productActions';
+import Meta from '../components/Meta';
 
 const ProductScreen = () => {
   //redux state
@@ -67,18 +68,22 @@ const ProductScreen = () => {
       })
     );
   };
+
+  let renderComponent;
+
+  if (loading) renderComponent = <Loader />;
+  if (error) renderComponent = <Message variant='danger'>{error}</Message>;
+  renderComponent = null;
+
   return (
     <Fragment>
       <Link className='btn btn-light my-3' to='/'>
         Go Back
       </Link>
-
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
-      ) : (
+      {renderComponent}
+      {!renderComponent && (
         <>
+          <Meta title={product.name} />
           <Row>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid />
