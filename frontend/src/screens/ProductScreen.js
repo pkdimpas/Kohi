@@ -69,19 +69,17 @@ const ProductScreen = () => {
     );
   };
 
-  let renderComponent;
-
-  if (loading) renderComponent = <Loader />;
-  if (error) renderComponent = <Message variant='danger'>{error}</Message>;
-  renderComponent = null;
-
   return (
     <Fragment>
       <Link className='btn btn-light my-3' to='/'>
         Go Back
       </Link>
-      {renderComponent}
-      {!renderComponent && (
+
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant='danger'>{error}</Message>
+      ) : (
         <>
           <Meta title={product.name} />
           <Row>
