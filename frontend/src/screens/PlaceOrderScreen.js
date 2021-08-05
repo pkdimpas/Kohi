@@ -8,9 +8,16 @@ import { createOrder } from '../actions/orderActions';
 import { formatter } from '../helpers/formatter';
 
 const PlaceOrderScreen = () => {
+  //hooks
   const dispatch = useDispatch();
   const history = useHistory();
+
+  //redux state
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+
   const cart = useSelector((state) => state.cart);
+
   // Calculate prices
   cart.itemsPrice = cart.cartItems.reduce(
     (acc, item) => acc + item.price * item.qty,
@@ -25,20 +32,19 @@ const PlaceOrderScreen = () => {
     Number(cart.taxPrice)
   ).toFixed(2);
 
-  const orderCreate = useSelector((state) => state.orderCreate);
-  const { order, success, error } = orderCreate;
-
   useEffect(() => {
     if (success) {
       history.push(`/order/${order._id}`);
     }
     // eslint-disable-next-line
   }, [history, success]);
+
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
+        shippingPrice: cart.shippingPrice,
         paymentMethod: cart.paymentMethod,
         itemsPrice: cart.itemsPrice,
         taxPrice: cart.taxPrice,
