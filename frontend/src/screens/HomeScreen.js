@@ -31,7 +31,10 @@ const HomeScreen = () => {
       <Meta />
 
       {!keyword ? (
-        <ProductCarousel />
+        <>
+          <h1>Best Products</h1>
+          <ProductCarousel />
+        </>
       ) : (
         <Link to='/' className='btn btn-light'>
           Go Back

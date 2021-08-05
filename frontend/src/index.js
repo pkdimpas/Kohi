@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider } from 'react-redux';
-import './bootstrap.min.css';
+import './bootstrap-litera.min.css';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
