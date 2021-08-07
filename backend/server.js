@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import express from 'express';
 import dontenv from 'dotenv';
 import colors from 'colors';
+import pkg from 'cloudinary';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
@@ -15,6 +16,7 @@ dontenv.config();
 connectDB();
 
 const app = express();
+const cloudinary = pkg;
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -22,6 +24,13 @@ if (process.env.NODE_ENV === 'development') {
 
 //Allow us to accept json data in the body
 app.use(express.json());
+
+//CONFIG to upload images to cloudinary
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
