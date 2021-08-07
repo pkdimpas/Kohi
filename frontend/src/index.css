@@ -82,6 +82,7 @@ a {
 }
 
 @media (max-width: 430px) {
+  .h1-bestProducts,
   .carousel {
     display: none;
   }
