@@ -23,13 +23,9 @@ const HomeScreen = () => {
     dispatch(listProducts(keyword, pageNumber));
   }, [dispatch, keyword, pageNumber]);
 
-  if (loading) return <Loader />;
-  if (error) return <Message variant='danger'>{error}</Message>;
-
   return (
     <>
       <Meta />
-
       {!keyword ? (
         <>
           <h1 className='h1-bestProducts'>Best Products</h1>
@@ -41,24 +37,36 @@ const HomeScreen = () => {
         </Link>
       )}
 
-      <h1>Latest Products</h1>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant='danger'>{error}</Message>
+      ) : (
+        <>
+          <h1>Latest Products</h1>
 
-      <Row>
-        {products.map((product) => (
-          <Col
-            className='align-items-stretch d-flex'
-            key={product._id}
-            sm={12}
-            md={6}
-            lg={4}
-            xl={3}
-          >
-            <Product product={product} />
-          </Col>
-        ))}
-      </Row>
+          <Row>
+            {products.map((product) => (
+              <Col
+                className='align-items-stretch d-flex'
+                key={product._id}
+                sm={12}
+                md={6}
+                lg={4}
+                xl={3}
+              >
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
 
-      <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''} />
+          <Paginate
+            pages={pages}
+            page={page}
+            keyword={keyword ? keyword : ''}
+          />
+        </>
+      )}
     </>
   );
 };
