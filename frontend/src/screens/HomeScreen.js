@@ -32,7 +32,7 @@ const HomeScreen = () => {
 
       {!keyword ? (
         <>
-          <h1>Best Products</h1>
+          <h1 className='h1-bestProducts'>Best Products</h1>
           <ProductCarousel />
         </>
       ) : (
