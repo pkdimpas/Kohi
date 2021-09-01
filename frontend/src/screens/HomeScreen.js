@@ -42,7 +42,7 @@ const HomeScreen = () => {
 
       <h1>Latest Products</h1>
       {loading ? (
-        <Row className='transition'>
+        <Row>
           {[...Array(8)].map((val, idx) => (
             <ProductCard key={idx + 1} Component={<ProductSkeleton />} />
           ))}

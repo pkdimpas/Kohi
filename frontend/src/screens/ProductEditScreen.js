@@ -138,12 +138,10 @@ const ProductEditScreen = () => {
 
             <Form.Group controlId='image'>
               <Form.Label>Image</Form.Label>
-              <Form.File
-                id='image-file'
-                custom
+              <Form.Control
+                type='file'
                 onChange={uploadFileHandler}
-              ></Form.File>
-              {uploading && <Loader />}
+              ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId='brand'>
@@ -186,9 +184,15 @@ const ProductEditScreen = () => {
               ></Form.Control>
             </Form.Group>
 
-            <Button type='submit' variant='primary'>
-              Update
-            </Button>
+            {uploading ? (
+              <Button className='my-3' disabled variant='primary'>
+                Update
+              </Button>
+            ) : (
+              <Button className='my-3' type='submit' variant='primary'>
+                Update
+              </Button>
+            )}
           </Form>
         )}
       </FormContainer>

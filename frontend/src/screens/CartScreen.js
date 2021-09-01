@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 //components
 import { Row, Col, ListGroup } from 'react-bootstrap';
@@ -8,20 +8,22 @@ import Message from '../components/Message';
 //actions
 import { addToCart, removeFromCart } from '../actions/cartActions';
 
+import { formatter } from '../helpers/formatter';
+
 const CartScreen = () => {
-  const { id: productID } = useParams();
-  const { search } = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const qty = Number(new URLSearchParams(search).get('qty'));
+  const [total, setTotal] = useState(0);
 
   const { cartItems } = useSelector((state) => state.cart);
 
   useEffect(() => {
-    if (productID) {
-      dispatch(addToCart(productID, qty));
-    }
-  }, [dispatch, productID, qty]);
+    setTotal(cartItems.reduce((acc, item) => acc + item.qty, 0));
+  }, [cartItems]);
+
+  const addToCartHandler = (product, qty) => {
+    dispatch(addToCart(product, qty));
+  };
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
@@ -61,9 +63,7 @@ const CartScreen = () => {
                       as='select'
                       value={item.qty}
                       onChange={(e) =>
-                        dispatch(
-                          addToCart(item.product, Number(e.target.value))
-                        )
+                        addToCartHandler(item.product, Number(e.target.value))
                       }
                     >
                       {[...Array(item.countInStock).keys()].map((value) => (
@@ -93,18 +93,14 @@ const CartScreen = () => {
         <Card>
           <ListGroup variant='flush'>
             <ListGroup.Item>
-              <h2>
-                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-                items
-              </h2>
-              $
-              {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
-                .toFixed(2)}
+              <h2>Subtotal ({total}) items</h2>
+              {formatter.format(
+                cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)
+              )}
             </ListGroup.Item>
             <ListGroup.Item>
               <Button
-                block
+                className='w-100'
                 disabled={cartItems.length === 0}
                 onClick={checkoutHandler}
               >
