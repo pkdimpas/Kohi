@@ -1,15 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import { useParams } from 'react-router-dom';
 import Message from '../components/Message';
-import Loader from '../components/Loader';
 import Product from '../components/Product';
 import Paginate from '../components/Paginate';
 import Meta from '../components/Meta';
 import ProductCarousel from '../components/ProductCarousel';
+import ProductSkeleton from '../components/ProductSkeleton';
+import ProductCard from '../components/ProductCard';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ const HomeScreen = () => {
   useEffect(() => {
     dispatch(listProducts(keyword, pageNumber));
   }, [dispatch, keyword, pageNumber]);
+
+  if (error) return <Message variant='danger'>{error}</Message>;
 
   return (
     <>
@@ -37,36 +40,24 @@ const HomeScreen = () => {
         </Link>
       )}
 
+      <h1>Latest Products</h1>
       {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
+        <Row className='transition'>
+          {[...Array(8)].map((val, idx) => (
+            <ProductCard key={idx + 1} Component={<ProductSkeleton />} />
+          ))}
+        </Row>
       ) : (
-        <>
-          <h1>Latest Products</h1>
-
-          <Row>
-            {products.map((product) => (
-              <Col
-                className='align-items-stretch d-flex'
-                key={product._id}
-                sm={12}
-                md={6}
-                lg={4}
-                xl={3}
-              >
-                <Product product={product} />
-              </Col>
-            ))}
-          </Row>
-
-          <Paginate
-            pages={pages}
-            page={page}
-            keyword={keyword ? keyword : ''}
-          />
-        </>
+        <Row className='transition'>
+          {products.map((product) => (
+            <ProductCard
+              key={product._id}
+              Component={<Product product={product} />}
+            />
+          ))}
+        </Row>
       )}
+      <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''} />
     </>
   );
 };

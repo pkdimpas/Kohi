@@ -17,26 +17,31 @@ const ProductCarousel = () => {
     dispatch(listTopProducts());
   }, [dispatch]);
 
-  if (loading) return <Loader />;
   if (error) return <Message variant='danger'>{error}</Message>;
 
   return (
     <Carousel pause='hover' className='bg-light' fade>
-      {products.map((product) => (
-        <Carousel.Item key={product._id}>
-          <Link to={`/product/${product._id}`}>
-            <div className='img-div'>
-              <Image src={product.image} alt={product.name} fluid />
-            </div>
-
-            <Carousel.Caption className='carousel-caption'>
-              <h2>
-                {product.name} ({formatter.format(product.price)})
-              </h2>
-            </Carousel.Caption>
-          </Link>
+      {loading ? (
+        <Carousel.Item style={{ height: '350px' }}>
+          <Loader />
         </Carousel.Item>
-      ))}
+      ) : (
+        products.map((product) => (
+          <Carousel.Item key={product._id} className='transition'>
+            <Link to={`/product/${product._id}`}>
+              <div className='img-div'>
+                <Image src={product.image} alt={product.name} fluid />
+              </div>
+
+              <Carousel.Caption className='carousel-caption'>
+                <h2>
+                  {product.name} ({formatter.format(product.price)})
+                </h2>
+              </Carousel.Caption>
+            </Link>
+          </Carousel.Item>
+        ))
+      )}
     </Carousel>
   );
 };

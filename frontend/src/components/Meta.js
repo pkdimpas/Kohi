@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+
 const Meta = ({ title, description, keywords }) => {
   return (
     <Helmet>

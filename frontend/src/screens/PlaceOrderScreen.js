@@ -44,8 +44,8 @@ const PlaceOrderScreen = () => {
       createOrder({
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
-        shippingPrice: cart.shippingPrice,
         paymentMethod: cart.paymentMethod,
+        shippingPrice: cart.shippingPrice,
         itemsPrice: cart.itemsPrice,
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
