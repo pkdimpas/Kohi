@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, NavDropdown, Nav, Container } from 'react-bootstrap';
+import { Navbar, NavDropdown, Nav, Container, Badge } from 'react-bootstrap';
 import { logout } from '../actions/userActions';
 import SearchBox from './SearchBox';
 
@@ -9,12 +9,13 @@ const Header = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  let profile;
+  const { cartItems } = useSelector((state) => state.cart);
+
   const logoutHandler = () => {
     dispatch(logout());
   };
 
-  profile = userInfo ? (
+  let profile = userInfo ? (
     <NavDropdown title={userInfo.name} id='username'>
       <LinkContainer to='/profile'>
         <NavDropdown.Item>Profile</NavDropdown.Item>
@@ -44,7 +45,10 @@ const Header = () => {
             <Nav className='ms-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link active={false}>
-                  <i className='fas fa-shopping-cart'></i> Cart
+                  <i className='fas fa-shopping-cart'></i> Cart{' '}
+                  <Badge pill bg='danger'>
+                    {cartItems.reduce((acc, item) => acc + item.qty, 0)}
+                  </Badge>
                 </Nav.Link>
               </LinkContainer>
               {userInfo && userInfo.isAdmin && (

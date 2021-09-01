@@ -21,6 +21,7 @@ import {
   resetCreateReviewProduct,
 } from '../actions/productActions';
 import Meta from '../components/Meta';
+import { addToCart } from '../actions/cartActions';
 
 const ProductScreen = () => {
   //redux state
@@ -36,7 +37,6 @@ const ProductScreen = () => {
   //react-router-dom hooks
   const { id: paramId } = useParams({});
   const dispatch = useDispatch();
-  const history = useHistory();
 
   //local state
   const [qty, setQty] = useState(1);
@@ -56,7 +56,7 @@ const ProductScreen = () => {
   }, [dispatch, paramId, successReview]);
 
   const addToCartHandler = () => {
-    history.push(`/cart/${paramId}?qty=${qty}`);
+    dispatch(addToCart(paramId, Number(qty)));
   };
 
   const addCommentHandler = (e) => {
@@ -203,7 +203,7 @@ const ProductScreen = () => {
                           onChange={(e) => setComment(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
-                      <Button type='submit' variant='primary'>
+                      <Button className='my-2' type='submit' variant='primary'>
                         Submit
                       </Button>
                     </Form>
