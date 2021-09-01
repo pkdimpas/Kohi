@@ -128,8 +128,7 @@ const ProductScreen = () => {
                       <Row>
                         <Col>Qty</Col>
                         <Col>
-                          <Form.Control
-                            as='select'
+                          <Form.Select
                             value={qty}
                             onChange={(e) => setQty(e.target.value)}
                           >
@@ -140,7 +139,7 @@ const ProductScreen = () => {
                                 </option>
                               )
                             )}
-                          </Form.Control>
+                          </Form.Select>
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -181,8 +180,7 @@ const ProductScreen = () => {
                     <Form onSubmit={addCommentHandler}>
                       <Form.Group controlId='rating'>
                         <Form.Label>Rating</Form.Label>
-                        <Form.Control
-                          as='select'
+                        <Form.Select
                           value={rating}
                           onChange={(e) => setRating(e.target.value)}
                         >
@@ -192,7 +190,7 @@ const ProductScreen = () => {
                           <option value='3'>3 - Good</option>
                           <option value='4'>4 - Very Good</option>
                           <option value='5'>5 - Excellent</option>
-                        </Form.Control>
+                        </Form.Select>
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Comment</Form.Label>
