@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import { useParams } from 'react-router-dom';
 import Message from '../components/Message';
-import Loader from '../components/Loader';
 import Product from '../components/Product';
 import Paginate from '../components/Paginate';
 import Meta from '../components/Meta';
@@ -16,7 +15,6 @@ import ProductCard from '../components/ProductCard';
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const { keyword, pageNumber = 1 } = useParams();
-  const [delay, setDelay] = useState(true);
 
   //redux state
   const productList = useSelector((state) => state.productList);
@@ -24,8 +22,8 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(listProducts(keyword, pageNumber));
-  }, [dispatch, keyword, pageNumber, delay]);
-  setTimeout(() => setDelay(false), 5000);
+  }, [dispatch, keyword, pageNumber]);
+
   if (error) return <Message variant='danger'>{error}</Message>;
 
   return (
@@ -41,19 +39,24 @@ const HomeScreen = () => {
           Go Back
         </Link>
       )}
+
       <h1>Latest Products</h1>
-      <Row className='transition'>
-        {loading
-          ? [...Array(8)].map(() => (
-              <ProductCard Component={<ProductSkeleton />} />
-            ))
-          : products.map((product) => (
-              <ProductCard
-                key={product.id}
-                Component={<Product product={product} />}
-              />
-            ))}
-      </Row>
+      {loading ? (
+        <Row className='transition'>
+          {[...Array(8)].map((val, idx) => (
+            <ProductCard key={idx + 1} Component={<ProductSkeleton />} />
+          ))}
+        </Row>
+      ) : (
+        <Row className='transition'>
+          {products.map((product) => (
+            <ProductCard
+              key={product._id}
+              Component={<Product product={product} />}
+            />
+          ))}
+        </Row>
+      )}
       <Paginate pages={pages} page={page} keyword={keyword ? keyword : ''} />
     </>
   );
