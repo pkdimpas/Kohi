@@ -59,8 +59,7 @@ const CartScreen = () => {
                   <Col md={2}>${item.price}</Col>
 
                   <Col md={2}>
-                    <Form.Control
-                      as='select'
+                    <Form.Select
                       value={item.qty}
                       onChange={(e) =>
                         addToCartHandler(item.product, Number(e.target.value))
@@ -71,7 +70,7 @@ const CartScreen = () => {
                           {value + 1}
                         </option>
                       ))}
-                    </Form.Control>
+                    </Form.Select>
                   </Col>
 
                   <Col md={2}>
@@ -94,9 +93,14 @@ const CartScreen = () => {
           <ListGroup variant='flush'>
             <ListGroup.Item>
               <h2>Subtotal ({total}) items</h2>
-              {formatter.format(
-                cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)
-              )}
+              <h5>
+                {formatter.format(
+                  cartItems.reduce(
+                    (acc, item) => acc + item.qty * item.price,
+                    0
+                  )
+                )}
+              </h5>
             </ListGroup.Item>
             <ListGroup.Item>
               <Button
